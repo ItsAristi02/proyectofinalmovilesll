@@ -9,16 +9,15 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ServicioEmpleado implements ServicioBase{
+public class ServicioEmpleado implements ServicioBase<Empleado>{
 
     @Autowired
     RepositorioEmpleado repositorioEmpleado;
-
     @Override
-    public List buscarTodos() throws Exception {
+    public List<Empleado> buscarTodos() throws Exception {
         try{
-           List<Empleado> empleados = repositorioEmpleado.findAll();
-           return empleados;
+            List<Empleado> empleados = repositorioEmpleado.findAll();
+            return empleados;
         }catch (Exception error) {
             throw new Exception(error.getMessage());
         }
@@ -26,21 +25,29 @@ public class ServicioEmpleado implements ServicioBase{
 
     @Override
     public Empleado buscarPorId(Integer id) throws Exception {
-      try{
-          Optional<Empleado> empleadoBuscado = repositorioEmpleado.findById(id);
-          return empleadoBuscado.get();
-      }catch (Exception error){
-          throw new Exception(error.getMessage());
-      }
+        try{
+            Optional<Empleado> empleadoBuscado = repositorioEmpleado.findById(id);
+            return empleadoBuscado.get();
+        }catch (Exception error){
+            throw new Exception(error.getMessage());
+        }
     }
 
     @Override
-    public Object registrar(Object entidad) throws Exception {
+    public Empleado registrar(Empleado entidad) throws Exception {
         return null;
     }
 
     @Override
-    public Object editar(Integer id, Object entidad) throws Exception {
-        return null;
+    public Empleado editar(Integer id, Empleado entidad) throws Exception {
+        try{
+            Optional<Empleado> empleadoBuscado = repositorioEmpleado.findById(id);
+            Empleado empleadoEditado = empleadoBuscado.get();
+            empleadoEditado = repositorioEmpleado.save(entidad);
+
+            return empleadoEditado;
+        }catch (Exception error){
+            throw new Exception(error.getMessage());
+        }
     }
 }

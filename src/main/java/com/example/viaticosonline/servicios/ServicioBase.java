@@ -1,5 +1,7 @@
 package com.example.viaticosonline.servicios;
 
+import com.example.viaticosonline.entidades.Empleado;
+
 import java.util.List;
 
 public interface ServicioBase <E> {
@@ -7,4 +9,6 @@ public interface ServicioBase <E> {
     public  E buscarPorId(Integer id) throws Exception;
     public E registrar(E entidad) throws  Exception;
     public E editar(Integer id, E entidad) throws Exception;
+
+
 }
