@@ -37,14 +37,21 @@ public class ServicioViaje implements ServicioBase<Viaje>{
 
     @Override
     public Viaje registrar(Viaje entidad) throws Exception {
-        return null;
+        try{
+            entidad = repositorioviaje.save(entidad);
+            return entidad;
+        }catch (Exception error){
+            throw new Exception(error.getMessage());
+        }
     }
 
     @Override
     public Viaje editar(Integer id, Viaje entidad) throws Exception {
         try{
             Optional<Viaje> viajeBuscado = repositorioviaje.findById(id);
-            return viajeBuscado.get();
+            Viaje viaje = viajeBuscado.get();
+            viaje = repositorioviaje.save(entidad);
+            return viaje;
         }catch (Exception error){
             throw new Exception(error.getMessage());
         }
